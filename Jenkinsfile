@@ -4,12 +4,12 @@ node {
     stage('Clone repository') {
       
 
-        checkout scm
+        checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ShubhamArora073/kubernetescode.git']])
     }
 
     stage('Build image') {
   
-       app = docker.build("raj80dockerid/test")
+       app = docker.build("shubhamarora073/test")
     }
 
     stage('Test image') {
