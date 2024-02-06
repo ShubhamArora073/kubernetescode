@@ -1,5 +1,8 @@
 node {
     def app
+    environment{
+        DOCKERHUB_CREDS = credentials('DockerHub')
+    }
 
     stage('Clone repository') {
       
@@ -19,6 +22,13 @@ node {
             sh 'echo "Tests passed"'
         }
     }
+
+    stage('Docker Login') {
+            steps {
+                //sh 'docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW' (this will leave the password visible)
+                sh 'echo $DOCKERHUB_CREDS_PSW | sudo docker login -u $DOCKERHUB_CREDS_USR --password-stdin'                
+                }
+            }
 
     stage('Push image') {
         
